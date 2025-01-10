@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="img.jpg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wil63 - La Légende</title>
+    <style>
+        /* Styles globaux */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: #ffeb3b;
+            color: #333;
+            overflow: hidden;
+            height: 100%;
+            transition: background-color 0.5s ease;
+        }
+
+        /* Section principale */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #ffd600, #ffeb3b, #fff176);
+            animation: bg-pulse 5s infinite alternate;
+        }
+
+        .title {
+            font-size: 4em;
+            color: #333;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+            animation: text-glow 3s infinite alternate;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            margin-top: 10px;
+            color: #444;
+        }
+
+        .rotating-image {
+            width: 200px;
+            height: 200px;
+            margin: 20px 0;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: rotate 5s linear infinite;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background: #333;
+            color: #ffeb3b;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #555;
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        /* Popup */
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none; /* Caché par défaut */
+        }
+
+        .popup h2 {
+            margin: 0 0 15px;
+        }
+
+        .popup button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            background: #ffeb3b;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            display: none; /* Caché par défaut */
+        }
+
+        /* Popup animation */
+        .popup img {
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+            display: block;
+        }
+
+        @keyframes text-glow {
+            0% { text-shadow: 0 0 10px #ffd600, 0 0 20px #ffeb3b, 0 0 30px #fff176; }
+            100% { text-shadow: 0 0 20px #ffea00, 0 0 30px #fff176, 0 0 40px #fff; }
+        }
+
+        @keyframes bg-pulse {
+            0% { background: linear-gradient(45deg, #ffd600, #ffeb3b, #fff176); }
+            100% { background: linear-gradient(45deg, #fff176, #ffd600, #ffeb3b); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Texte en bas à droite */
+        .footer-text {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 1.2em;
+            color: rgba(0, 0, 0, 0.1); /* Initialement très transparent */
+            transition: color 0.3s ease; /* Transition de couleur pour l'effet de survol */
+        }
+
+        .footer-text:hover {
+            color: rgba(0, 0, 0, 0.9); /* Deviens moins transparent au survol */
+        }
+
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1 class="title">Bienvenue dans l'univers de Wil63</h1>
+        <p class="subtitle">La légende, l'unique, le grand Wil63 !</p>
+
+        <!-- Image qui tourne -->
+        <img src="img.jpg" alt="Wil63" class="rotating-image">
+
+        <button id="magicButton">Clique ici pour s'abonner à Wil63 ✨</button>
+    </div>
+
+    <!-- Texte en bas à droite -->
+    <div class="footer-text">
+        Fait avec ❤️ par Glowny. Tous droits réservés © 2025.
+    </div>
+
+    <!-- Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h2>Abonnez-vous à Wil63 !</h2>
+        <p>Vous allez être redirigé vers la chaîne YouTube officielle de <strong>Wil63</strong>.</p>
+        <button id="closePopup">OK, j'y vais !</button>
+        <button id="noButton">NON, J'AI PAS ENVIE!</button>   
+    </div>
+
+    <!-- Popup pour l'animation et l'audio -->
+    <div class="popup" id="noPopup">
+        <h2>Wil63 Explosion!</h2>
+        <img src="explosion.gif" alt="Wil63 Explosion!">
+        <audio id="explosionAudio" src="macron-explosion.mp3" loop></audio>
+        <button id="closeNoPopup">Fermer</button>
+    </div>
+
+    <script>
+        // Récupération des éléments
+        const magicButton = document.getElementById('magicButton');
+        const noButton = document.getElementById('noButton');
+        const popup = document.getElementById('popup');
+        const overlay = document.getElementById('overlay');
+        const closePopup = document.getElementById('closePopup');
+        const noPopup = document.getElementById('noPopup');
+        const closeNoPopup = document.getElementById('closeNoPopup');
+        const explosionAudio = document.getElementById('explosionAudio');
+
+        // Afficher la popup principale
+        magicButton.addEventListener('click', () => {
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        // Fermer la popup principale et rediriger
+        closePopup.addEventListener('click', () => {
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+            window.location.href = 'https://www.youtube.com/channel/UCghhuqq_aTJptxMbsoP5ICA?sub_confirmation=1'; // Redirection vers la chaîne
+        });
+
+        // Afficher la popup avec l'animation quand "NON, J'AI PAS ENVIE!" est cliqué
+        noButton.addEventListener('click', () => {
+            popup.style.display = 'none';
+            noPopup.style.display = 'block'; // Afficher la popup avec le gif et l'audio
+            overlay.style.display = 'block'; // Afficher l'overlay également
+            explosionAudio.play(); // Lancer l'audio
+        });
+
+        // Fermer la popup de l'explosion
+        closeNoPopup.addEventListener('click', () => {
+            noPopup.style.display = 'none'; // Fermer la popup
+            explosionAudio.pause(); // Arrêter l'audio
+            overlay.style.display = 'none'; // Cacher l'overlay
+        });
+
+
+noButton.addEventListener('click', () => {
+explosion.style.display = 'block';
+explosionAudio.play(); // Joue l'effet sonore
+});
+
+    </script>
+</body>
+</html>
