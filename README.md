@@ -35,4 +35,4 @@ Ce projet est une page web qui met en valeur Wil63, avec plusieurs fonctionnalit
 ### 1️⃣ Étape 1 : Télécharger les fichiers
 Clone ou télécharge ce projet en local :
 ```bash
-git clone https://github.com/ton-pseudo/Wil63-Legende.git
+git clone https://github.com/glownydev/wil63site
